@@ -206,6 +206,7 @@ export 'src/chart/common/canvas_shapes.dart'
 export 'src/chart/common/chart_canvas.dart'
     show ChartCanvas, FillPatternType, BlendMode, LinkOrientation, Link;
 export 'src/chart/common/chart_context.dart' show ChartContext;
+export 'src/chart/common/chart_controller.dart';
 export 'src/chart/common/datum_details.dart'
     show DatumDetails, DomainFormatter, MeasureFormatter;
 export 'src/chart/common/processed_series.dart'
@@ -234,13 +235,19 @@ export 'src/chart/layout/layout_view.dart'
 export 'src/chart/line/line_chart.dart' show LineChart;
 export 'src/chart/line/line_renderer.dart' show LineRenderer;
 export 'src/chart/line/line_renderer_config.dart' show LineRendererConfig;
+export 'src/chart/link/link_chart.dart' show LinkChart;
+export 'src/chart/link/link_renderer_config.dart' show LinkRendererConfig;
 export 'src/chart/pie/arc_label_decorator.dart'
     show ArcLabelDecorator, ArcLabelLeaderLineStyleSpec, ArcLabelPosition;
 export 'src/chart/pie/arc_renderer.dart' show ArcRenderer;
 export 'src/chart/pie/arc_renderer_config.dart' show ArcRendererConfig;
 export 'src/chart/pie/pie_chart.dart' show PieChart;
+export 'src/chart/sankey/sankey_chart.dart' show SankeyChart;
+export 'src/chart/sankey/sankey_renderer_config.dart' show SankeyRendererConfig;
 export 'src/chart/scatter_plot/comparison_points_decorator.dart'
     show ComparisonPointsDecorator;
+export 'src/chart/scatter_plot/point_label_decorator.dart'
+    show PointLabelDecorator, PointLabelSpec;
 export 'src/chart/scatter_plot/point_renderer.dart'
     show
         boundsLineRadiusPxKey,
@@ -253,19 +260,17 @@ export 'src/chart/scatter_plot/point_renderer_config.dart'
     show PointRendererConfig;
 export 'src/chart/scatter_plot/point_renderer_decorator.dart'
     show PointRendererDecorator;
-export 'src/chart/scatter_plot/point_label_decorator.dart'
-    show PointLabelDecorator, PointLabelSpec;
 export 'src/chart/scatter_plot/scatter_plot_chart.dart' show ScatterPlotChart;
 export 'src/chart/scatter_plot/symbol_annotation_renderer.dart'
     show SymbolAnnotationRenderer;
-export 'src/chart/sunburst/sunburst_chart.dart' show SunburstChart;
+export 'src/chart/scatter_plot/symbol_annotation_renderer_config.dart'
+    show SymbolAnnotationRendererConfig;
+export 'src/chart/sunburst/sunburst_arc_label_decorator.dart'
+    show SunburstArcLabelDecorator;
 export 'src/chart/sunburst/sunburst_arc_renderer.dart' show SunburstArcRenderer;
 export 'src/chart/sunburst/sunburst_arc_renderer_config.dart'
     show SunburstArcRendererConfig, SunburstColorStrategy;
-export 'src/chart/sunburst/sunburst_arc_label_decorator.dart'
-    show SunburstArcLabelDecorator;
-export 'src/chart/scatter_plot/symbol_annotation_renderer_config.dart'
-    show SymbolAnnotationRendererConfig;
+export 'src/chart/sunburst/sunburst_chart.dart' show SunburstChart;
 export 'src/chart/time_series/time_series_chart.dart' show TimeSeriesChart;
 export 'src/chart/treemap/squarified_treemap_renderer.dart'
     show SquarifiedTreeMapRenderer;
@@ -274,11 +279,7 @@ export 'src/chart/treemap/treemap_label_decorator.dart'
     show TreeMapLabelDecorator;
 export 'src/chart/treemap/treemap_renderer_config.dart'
     show TreeMapRendererConfig, TreeMapTileType;
-export 'src/chart/sankey/sankey_chart.dart' show SankeyChart;
-export 'src/chart/sankey/sankey_renderer_config.dart' show SankeyRendererConfig;
 export 'src/common/color.dart' show Color;
-export 'src/chart/link/link_chart.dart' show LinkChart;
-export 'src/chart/link/link_renderer_config.dart' show LinkRendererConfig;
 export 'src/common/date_time_factory.dart'
     show DateTimeFactory, LocalDateTimeFactory, UTCDateTimeFactory;
 export 'src/common/gesture_listener.dart' show GestureListener;
@@ -306,10 +307,11 @@ export 'src/common/text_element.dart'
     show TextElement, TextDirection, MaxWidthStrategy;
 export 'src/common/text_measurement.dart' show TextMeasurement;
 export 'src/common/text_style.dart' show TextStyle;
-export 'src/data/series.dart' show AttributeKey, Series, TypedAccessorFn;
-export 'src/data/tree.dart' show Tree, TreeNode;
 export 'src/data/graph.dart' show Graph;
 export 'src/data/sankey_graph.dart' show SankeyGraph;
+export 'src/data/series.dart' show AttributeKey, Series, TypedAccessorFn;
+export 'src/data/tree.dart' show Tree, TreeNode;
+
 //
 // DO NOT ADD ANYTHING BELOW THIS. IT WILL BREAK OPENSOURCE.
 //

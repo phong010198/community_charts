@@ -14,16 +14,19 @@
 // limitations under the License.
 
 import '../../common/color.dart' show Color;
-import 'datum_details.dart' show DomainFormatter, MeasureFormatter;
 import '../../data/series.dart'
     show AccessorFn, Series, SeriesAttributes, AttributeKey;
 import '../cartesian/axis/axis.dart' show Axis;
 import '../cartesian/axis/spec/axis_spec.dart' show TextStyleSpec;
 import '../common/chart_canvas.dart' show FillPatternType;
+import 'datum_details.dart' show DomainFormatter, MeasureFormatter;
 
 class MutableSeries<D> extends ImmutableSeries<D> {
   @override
   final String id;
+
+  @override
+  final List<String> withSeriesIds;
 
   @override
   String? displayName;
@@ -124,6 +127,7 @@ class MutableSeries<D> extends ImmutableSeries<D> {
 
   MutableSeries(Series<dynamic, D> series)
       : id = series.id,
+        withSeriesIds = series.withSeriesIds,
         displayName = series.displayName ?? series.id,
         overlaySeries = series.overlaySeries,
         seriesCategory = series.seriesCategory,
@@ -170,6 +174,7 @@ class MutableSeries<D> extends ImmutableSeries<D> {
 
   MutableSeries.clone(MutableSeries<D> other)
       : id = other.id,
+        withSeriesIds = other.withSeriesIds,
         displayName = other.displayName,
         overlaySeries = other.overlaySeries,
         seriesCategory = other.seriesCategory,
@@ -222,6 +227,8 @@ class MutableSeries<D> extends ImmutableSeries<D> {
 
 abstract class ImmutableSeries<D> {
   String get id;
+
+  List<String> get withSeriesIds;
 
   String? get displayName;
 

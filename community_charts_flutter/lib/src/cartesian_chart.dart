@@ -14,7 +14,6 @@
 // limitations under the License.
 
 import 'dart:collection' show LinkedHashMap;
-import 'package:meta/meta.dart' show immutable, protected;
 
 import 'package:community_charts_common/community_charts_common.dart' as common
     show
@@ -22,13 +21,16 @@ import 'package:community_charts_common/community_charts_common.dart' as common
         BaseChart,
         CartesianChart,
         NumericAxis,
+        ChartController,
         NumericAxisSpec,
         RTLSpec,
         Series,
         SeriesRendererConfig;
+import 'package:meta/meta.dart' show immutable, protected;
+
+import 'base_chart.dart' show BaseChart, LayoutConfig;
 import 'base_chart_state.dart' show BaseChartState;
 import 'behaviors/chart_behavior.dart' show ChartBehavior;
-import 'base_chart.dart' show BaseChart, LayoutConfig;
 import 'selection_model_config.dart' show SelectionModelConfig;
 import 'user_managed_state.dart' show UserManagedState;
 
@@ -48,6 +50,7 @@ abstract class CartesianChart<D> extends BaseChart<D> {
     this.primaryMeasureAxis,
     this.secondaryMeasureAxis,
     this.disjointMeasureAxes,
+    required common.ChartController chartController,
     common.SeriesRendererConfig<D>? defaultRenderer,
     List<common.SeriesRendererConfig<D>>? customSeriesRenderers,
     List<ChartBehavior<D>>? behaviors,
@@ -61,6 +64,7 @@ abstract class CartesianChart<D> extends BaseChart<D> {
           seriesList,
           animate: animate,
           animationDuration: animationDuration,
+          chartController: chartController,
           defaultRenderer: defaultRenderer,
           customSeriesRenderers: customSeriesRenderers,
           behaviors: behaviors,

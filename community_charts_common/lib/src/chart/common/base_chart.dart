@@ -15,6 +15,7 @@
 
 import 'dart:math' show Rectangle, Point;
 
+import 'package:community_charts_common/src/chart/common/chart_controller.dart';
 import 'package:meta/meta.dart' show protected;
 
 import '../../common/gesture_listener.dart' show GestureListener;
@@ -39,6 +40,8 @@ typedef BehaviorCreator = ChartBehavior<D> Function<D>();
 
 abstract class BaseChart<D> {
   late ChartContext context;
+
+  late ChartController _chartController;
 
   /// Internal use only.
   GraphicsFactory? graphicsFactory;
@@ -116,8 +119,18 @@ abstract class BaseChart<D> {
   BaseChart({LayoutConfig? layoutConfig})
       : _layoutManager = LayoutManagerImpl(config: layoutConfig);
 
-  void init(ChartContext context, GraphicsFactory graphicsFactory) {
+  void init(
+    ChartContext context,
+    GraphicsFactory graphicsFactory,
+    ChartController chartController,
+  ) {
     this.context = context;
+    _chartController = chartController;
+    _chartController.clearSelection = () {
+      for (final selectionModel in _selectionModels.values) {
+        selectionModel.clearSelection();
+      }
+    };
 
     // When graphics factory is updated, update all the views.
     if (this.graphicsFactory != graphicsFactory) {

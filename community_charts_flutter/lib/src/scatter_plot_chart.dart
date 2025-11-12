@@ -18,15 +18,17 @@ import 'dart:collection' show LinkedHashMap;
 import 'package:community_charts_common/community_charts_common.dart' as common
     show
         AxisSpec,
+        ChartController,
         NumericAxisSpec,
         PointRendererConfig,
         RTLSpec,
         ScatterPlotChart,
-        SeriesRendererConfig,
-        Series;
-import 'behaviors/chart_behavior.dart' show ChartBehavior;
+        Series,
+        SeriesRendererConfig;
+
 import 'base_chart.dart' show LayoutConfig;
 import 'base_chart_state.dart' show BaseChartState;
+import 'behaviors/chart_behavior.dart' show ChartBehavior;
 import 'cartesian_chart.dart' show CartesianChart;
 import 'selection_model_config.dart' show SelectionModelConfig;
 import 'user_managed_state.dart' show UserManagedState;
@@ -40,6 +42,7 @@ class ScatterPlotChart extends CartesianChart<num> {
     common.NumericAxisSpec? primaryMeasureAxis,
     common.NumericAxisSpec? secondaryMeasureAxis,
     LinkedHashMap<String, common.NumericAxisSpec>? disjointMeasureAxes,
+    required common.ChartController chartController,
     common.PointRendererConfig<num>? defaultRenderer,
     List<common.SeriesRendererConfig<num>>? customSeriesRenderers,
     List<ChartBehavior<num>>? behaviors,
@@ -57,6 +60,7 @@ class ScatterPlotChart extends CartesianChart<num> {
           primaryMeasureAxis: primaryMeasureAxis,
           secondaryMeasureAxis: secondaryMeasureAxis,
           disjointMeasureAxes: disjointMeasureAxes,
+          chartController: chartController,
           defaultRenderer: defaultRenderer,
           customSeriesRenderers: customSeriesRenderers,
           behaviors: behaviors,

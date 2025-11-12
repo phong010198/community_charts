@@ -48,11 +48,15 @@ class PerDatumLegendEntryGenerator<D> implements LegendEntryGenerator<D> {
 
     final series = seriesList[0];
     for (var i = 0; i < series.data.length; i++) {
-      legendEntries.add(LegendEntry<D>(series, series.domainFn(i).toString(),
-          color: series.colorFn!(i),
-          datum: series.data[i],
-          datumIndex: i,
-          textStyle: entryTextStyle));
+      legendEntries.add(LegendEntry<D>(
+        series,
+        series.domainFn(i).toString(),
+        withSeriesIds: series.withSeriesIds,
+        color: series.colorFn!(i),
+        datum: series.data[i],
+        datumIndex: i,
+        textStyle: entryTextStyle,
+      ));
     }
 
     // Update with measures only if showing measure on no selection.

@@ -26,6 +26,7 @@ import 'point_renderer_decorator.dart';
 class PointLabelSpec {
   final String label;
   final bool selected;
+
   PointLabelSpec({
     required this.label,
     this.selected = false,
@@ -77,6 +78,8 @@ class PointLabelDecorator<D> extends PointRendererDecorator<D> {
 
     final labelX = point.x!.toInt() - horizontalPadding;
     final labelY = point.y!.toInt() - verticalPadding;
+
+    if (labelX < drawBounds.left || labelX > (drawBounds.right - 20)) return;
 
     canvas.drawText(labelElement, labelX, labelY);
   }

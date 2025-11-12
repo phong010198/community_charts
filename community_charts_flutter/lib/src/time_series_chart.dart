@@ -18,17 +18,19 @@ import 'dart:collection' show LinkedHashMap;
 import 'package:community_charts_common/community_charts_common.dart' as common
     show
         AxisSpec,
+        ChartController,
         DateTimeFactory,
         LocalDateTimeFactory,
         NumericAxisSpec,
         Series,
         SeriesRendererConfig,
         TimeSeriesChart;
+
+import 'base_chart.dart' show LayoutConfig;
+import 'base_chart_state.dart' show BaseChartState;
 import 'behaviors/chart_behavior.dart' show ChartBehavior;
 import 'behaviors/line_point_highlighter.dart' show LinePointHighlighter;
 import 'cartesian_chart.dart' show CartesianChart;
-import 'base_chart.dart' show LayoutConfig;
-import 'base_chart_state.dart' show BaseChartState;
 import 'selection_model_config.dart' show SelectionModelConfig;
 import 'user_managed_state.dart' show UserManagedState;
 
@@ -47,6 +49,7 @@ class TimeSeriesChart extends CartesianChart<DateTime> {
     common.NumericAxisSpec? primaryMeasureAxis,
     common.NumericAxisSpec? secondaryMeasureAxis,
     LinkedHashMap<String, common.NumericAxisSpec>? disjointMeasureAxes,
+    required common.ChartController chartController,
     common.SeriesRendererConfig<DateTime>? defaultRenderer,
     List<common.SeriesRendererConfig<DateTime>>? customSeriesRenderers,
     List<ChartBehavior<DateTime>>? behaviors,
@@ -64,6 +67,7 @@ class TimeSeriesChart extends CartesianChart<DateTime> {
           primaryMeasureAxis: primaryMeasureAxis,
           secondaryMeasureAxis: secondaryMeasureAxis,
           disjointMeasureAxes: disjointMeasureAxes,
+          chartController: chartController,
           defaultRenderer: defaultRenderer,
           customSeriesRenderers: customSeriesRenderers,
           behaviors: behaviors,

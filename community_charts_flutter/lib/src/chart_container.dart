@@ -19,13 +19,14 @@ import 'package:community_charts_common/community_charts_common.dart' as common
         AxisDirection,
         BaseChart,
         ChartContext,
+        ChartController,
         DateTimeFactory,
         LocalDateTimeFactory,
+        Performance,
         ProxyGestureListener,
         RTLSpec,
         SelectionModelType,
-        Series,
-        Performance;
+        Series;
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/scheduler.dart';
@@ -40,6 +41,7 @@ import 'user_managed_state.dart' show UserManagedState;
 /// Widget that inflates to a [CustomPaint] that implements common [ChartContext].
 class ChartContainer<D> extends CustomPaint {
   final BaseChart<D> chartWidget;
+  final common.ChartController chartController;
   final BaseChart<D>? oldChartWidget;
   final BaseChartState<D> chartState;
   final double animationValue;
@@ -47,24 +49,31 @@ class ChartContainer<D> extends CustomPaint {
   final common.RTLSpec? rtlSpec;
   final UserManagedState<D>? userManagedState;
 
-  ChartContainer(
-      {this.oldChartWidget,
-      required this.chartWidget,
-      required this.chartState,
-      required this.animationValue,
-      required this.rtl,
-      this.rtlSpec,
-      this.userManagedState});
+  ChartContainer({
+    this.oldChartWidget,
+    required this.chartWidget,
+    required this.chartController,
+    required this.chartState,
+    required this.animationValue,
+    required this.rtl,
+    this.rtlSpec,
+    this.userManagedState,
+  });
 
   @override
   RenderCustomPaint createRenderObject(BuildContext context) {
-    return new ChartContainerRenderObject<D>()..reconfigure(this, context);
+    return new ChartContainerRenderObject<D>()
+      ..reconfigure(
+        this,
+        context,
+        chartController,
+      );
   }
 
   @override
   void updateRenderObject(
       BuildContext context, ChartContainerRenderObject renderObject) {
-    renderObject.reconfigure(this, context);
+    renderObject.reconfigure(this, context, chartController);
   }
 }
 
@@ -80,18 +89,19 @@ class ChartContainerRenderObject<D> extends RenderCustomPaint
   bool _exploreMode = false;
   List<common.A11yNode>? _a11yNodes;
 
-  void reconfigure(ChartContainer<D> config, BuildContext context) {
+  void reconfigure(ChartContainer<D> config, BuildContext context,
+      common.ChartController chartController) {
     _chartState = config.chartState;
 
     _dateTimeFactory = (config.chartWidget is TimeSeriesChart)
         ? (config.chartWidget as TimeSeriesChart).dateTimeFactory
         : null;
-    _dateTimeFactory ??= new common.LocalDateTimeFactory();
+    _dateTimeFactory ??= const common.LocalDateTimeFactory();
 
     if (_chart == null) {
       common.Performance.time('chartsCreate');
       _chart = config.chartWidget.createCommonChart(_chartState);
-      _chart!.init(this, new GraphicsFactory(context));
+      _chart!.init(this, new GraphicsFactory(context), chartController);
       common.Performance.timeEnd('chartsCreate');
     }
     common.Performance.time('chartsConfig');

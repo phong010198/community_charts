@@ -22,15 +22,17 @@ import 'package:community_charts_common/community_charts_common.dart' as common
         BarGroupingType,
         BarRendererConfig,
         BarRendererDecorator,
+        ChartController,
         NumericAxisSpec,
         RTLSpec,
         Series,
         SeriesRendererConfig;
-import 'behaviors/domain_highlighter.dart' show DomainHighlighter;
-import 'behaviors/chart_behavior.dart' show ChartBehavior;
 import 'package:meta/meta.dart' show immutable;
+
 import 'base_chart.dart' show LayoutConfig;
 import 'base_chart_state.dart' show BaseChartState;
+import 'behaviors/chart_behavior.dart' show ChartBehavior;
+import 'behaviors/domain_highlighter.dart' show DomainHighlighter;
 import 'cartesian_chart.dart' show CartesianChart;
 import 'selection_model_config.dart' show SelectionModelConfig;
 import 'user_managed_state.dart' show UserManagedState;
@@ -49,6 +51,7 @@ class BarChart extends CartesianChart<String> {
     common.NumericAxisSpec? secondaryMeasureAxis,
     LinkedHashMap<String, common.NumericAxisSpec>? disjointMeasureAxes,
     common.BarGroupingType? barGroupingType,
+    required common.ChartController chartController,
     common.BarRendererConfig<String>? defaultRenderer,
     List<common.SeriesRendererConfig<String>>? customSeriesRenderers,
     List<ChartBehavior<String>>? behaviors,
@@ -68,6 +71,7 @@ class BarChart extends CartesianChart<String> {
           primaryMeasureAxis: primaryMeasureAxis,
           secondaryMeasureAxis: secondaryMeasureAxis,
           disjointMeasureAxes: disjointMeasureAxes,
+          chartController: chartController,
           defaultRenderer: defaultRenderer ??
               new common.BarRendererConfig<String>(
                   groupingType: barGroupingType,

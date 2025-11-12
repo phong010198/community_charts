@@ -14,9 +14,11 @@
 // limitations under the License.
 
 import 'dart:math' show Rectangle;
+
 import 'package:community_charts_common/community_charts_common.dart' as common
     show ChartCanvas, Color, FillPatternType, SymbolRenderer;
 import 'package:flutter/widgets.dart';
+
 import 'chart_canvas.dart' show ChartCanvas;
 import 'graphics_factory.dart' show GraphicsFactory;
 
@@ -34,7 +36,11 @@ class SymbolRendererCanvas implements SymbolRendererBuilder {
   Widget build(BuildContext context,
       {Color? color, required Size size, bool enabled = true}) {
     if (color != null && !enabled) {
-      color = color.withOpacity(0.26);
+      if (color.a == 0) {
+        color = color;
+      } else {
+        color = color.withOpacity(0.26);
+      }
     }
 
     return new SizedBox.fromSize(
