@@ -16,14 +16,15 @@
 import 'package:community_charts_common/community_charts_common.dart' as common
     show
         BaseChart,
+        ChartController,
         LayoutConfig,
         MarginSpec,
         Performance,
         RTLSpec,
-        Series,
-        SeriesRendererConfig,
         SelectionModelType,
-        SelectionTrigger;
+        SelectionTrigger,
+        Series,
+        SeriesRendererConfig;
 import 'behaviors/select_nearest.dart' show SelectNearest;
 import 'package:meta/meta.dart' show immutable;
 import 'behaviors/chart_behavior.dart'
@@ -45,6 +46,9 @@ abstract class BaseChart<D> extends StatefulWidget {
   /// Used to configure the margin sizes around the drawArea that the axis and
   /// other things render into.
   final LayoutConfig? layoutConfig;
+
+  // Default renderer used to draw series data on the chart.
+  final common.ChartController chartController;
 
   // Default renderer used to draw series data on the chart.
   final common.SeriesRendererConfig<D>? defaultRenderer;
@@ -72,6 +76,7 @@ abstract class BaseChart<D> extends StatefulWidget {
   BaseChart(this.seriesList,
       {bool? animate,
       Duration? animationDuration,
+      required this.chartController,
       this.defaultRenderer,
       this.customSeriesRenderers,
       this.behaviors,

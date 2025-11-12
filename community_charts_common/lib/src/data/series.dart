@@ -22,6 +22,7 @@ import '../common/typed_registry.dart' show TypedRegistry, TypedKey;
 
 class Series<T, D> {
   final String id;
+  final List<String> withSeriesIds;
   final String? displayName;
 
   /// Overlay series provided supplemental information on a chart, but are not
@@ -105,6 +106,7 @@ class Series<T, D> {
 
   factory Series(
       {required String id,
+      List<String> withSeriesIds = const [],
       required List<T> data,
       required TypedAccessorFn<T, D> domainFn,
       required TypedAccessorFn<T, num?> measureFn,
@@ -192,6 +194,7 @@ class Series<T, D> {
 
     return Series._internal(
       id: id,
+      withSeriesIds: withSeriesIds,
       data: data,
       domainFn: _domainFn,
       measureFn: _measureFn,
@@ -223,6 +226,7 @@ class Series<T, D> {
 
   Series._internal({
     required this.id,
+    required this.withSeriesIds,
     required this.data,
     required this.domainFn,
     required this.measureFn,

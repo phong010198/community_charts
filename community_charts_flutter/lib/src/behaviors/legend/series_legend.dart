@@ -13,6 +13,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+import 'package:collection/collection.dart' show ListEquality;
 import 'package:community_charts_common/community_charts_common.dart' as common
     show
         BehaviorPosition,
@@ -26,9 +27,9 @@ import 'package:community_charts_common/community_charts_common.dart' as common
         SeriesLegend,
         SelectionModelType,
         TextStyleSpec;
-import 'package:collection/collection.dart' show ListEquality;
 import 'package:flutter/widgets.dart' show BuildContext, EdgeInsets, Widget;
 import 'package:meta/meta.dart' show immutable;
+
 import '../../chart_container.dart' show ChartContainerRenderObject;
 import '../chart_behavior.dart'
     show BuildableBehavior, ChartBehavior, GestureType;
@@ -82,6 +83,9 @@ class SeriesLegend<D> extends ChartBehavior<D> {
   /// Formatter for secondary measure value(s) if the measures are shown on the
   /// legend and the series uses the secondary axis.
   final common.MeasureFormatter? secondaryMeasureFormatter;
+
+  /// onLegendTap.
+  final Function()? onLegendTap;
 
   /// Styles for legend entry label text.
   final common.TextStyleSpec? entryTextStyle;
@@ -143,6 +147,7 @@ class SeriesLegend<D> extends ChartBehavior<D> {
     common.LegendDefaultMeasure? legendDefaultMeasure,
     common.MeasureFormatter? measureFormatter,
     common.MeasureFormatter? secondaryMeasureFormatter,
+    Function()? onLegendTap,
     common.TextStyleSpec? entryTextStyle,
   }) {
     // Set defaults if empty.
@@ -163,19 +168,21 @@ class SeriesLegend<D> extends ChartBehavior<D> {
             desiredMaxRows: desiredMaxRows, cellPadding: cellPadding);
 
     return new SeriesLegend._internal(
-        contentBuilder:
-            new TabularLegendContentBuilder(legendLayout: layoutBuilder),
-        selectionModelType: common.SelectionModelType.info,
-        position: position,
-        outsideJustification: outsideJustification,
-        insideJustification: insideJustification,
-        defaultHiddenSeries: defaultHiddenSeries,
-        showMeasures: showMeasures ?? false,
-        legendDefaultMeasure:
-            legendDefaultMeasure ?? common.LegendDefaultMeasure.none,
-        measureFormatter: measureFormatter,
-        secondaryMeasureFormatter: secondaryMeasureFormatter,
-        entryTextStyle: entryTextStyle);
+      contentBuilder:
+          new TabularLegendContentBuilder(legendLayout: layoutBuilder),
+      selectionModelType: common.SelectionModelType.info,
+      position: position,
+      outsideJustification: outsideJustification,
+      insideJustification: insideJustification,
+      defaultHiddenSeries: defaultHiddenSeries,
+      showMeasures: showMeasures ?? false,
+      legendDefaultMeasure:
+          legendDefaultMeasure ?? common.LegendDefaultMeasure.none,
+      measureFormatter: measureFormatter,
+      secondaryMeasureFormatter: secondaryMeasureFormatter,
+      onLegendTap: onLegendTap,
+      entryTextStyle: entryTextStyle,
+    );
   }
 
   /// Create a legend with custom layout.
@@ -218,6 +225,7 @@ class SeriesLegend<D> extends ChartBehavior<D> {
     common.LegendDefaultMeasure? legendDefaultMeasure,
     common.MeasureFormatter? measureFormatter,
     common.MeasureFormatter? secondaryMeasureFormatter,
+    Function()? onLegendTap,
     common.TextStyleSpec? entryTextStyle,
   }) {
     // Set defaults if empty.
@@ -237,6 +245,7 @@ class SeriesLegend<D> extends ChartBehavior<D> {
           legendDefaultMeasure ?? common.LegendDefaultMeasure.none,
       measureFormatter: measureFormatter,
       secondaryMeasureFormatter: secondaryMeasureFormatter,
+      onLegendTap: onLegendTap,
       entryTextStyle: entryTextStyle,
     );
   }
@@ -252,6 +261,7 @@ class SeriesLegend<D> extends ChartBehavior<D> {
     this.legendDefaultMeasure,
     this.measureFormatter,
     this.secondaryMeasureFormatter,
+    this.onLegendTap,
     this.entryTextStyle,
   });
 
@@ -277,28 +287,31 @@ class SeriesLegend<D> extends ChartBehavior<D> {
         position == o.position &&
         outsideJustification == o.outsideJustification &&
         insideJustification == o.insideJustification &&
-        new ListEquality().equals(defaultHiddenSeries, o.defaultHiddenSeries) &&
+        const ListEquality().equals(defaultHiddenSeries, o.defaultHiddenSeries) &&
         showMeasures == o.showMeasures &&
         legendDefaultMeasure == o.legendDefaultMeasure &&
         measureFormatter == o.measureFormatter &&
         secondaryMeasureFormatter == o.secondaryMeasureFormatter &&
+        onLegendTap == o.onLegendTap &&
         entryTextStyle == o.entryTextStyle;
   }
 
   @override
   int get hashCode {
     return Object.hash(
-        selectionModelType,
-        contentBuilder,
-        position,
-        outsideJustification,
-        insideJustification,
-        defaultHiddenSeries,
-        showMeasures,
-        legendDefaultMeasure,
-        measureFormatter,
-        secondaryMeasureFormatter,
-        entryTextStyle);
+      selectionModelType,
+      contentBuilder,
+      position,
+      outsideJustification,
+      insideJustification,
+      defaultHiddenSeries,
+      showMeasures,
+      legendDefaultMeasure,
+      measureFormatter,
+      secondaryMeasureFormatter,
+      onLegendTap,
+      entryTextStyle,
+    );
   }
 }
 
@@ -312,6 +325,7 @@ class _FlutterSeriesLegend<D> extends common.SeriesLegend<D>
           selectionModelType: config.selectionModelType,
           measureFormatter: config.measureFormatter,
           secondaryMeasureFormatter: config.secondaryMeasureFormatter,
+          onLegendTap: config.onLegendTap,
           legendDefaultMeasure: config.legendDefaultMeasure,
         ) {
     super.defaultHiddenSeries = config.defaultHiddenSeries;
@@ -351,8 +365,10 @@ class _FlutterSeriesLegend<D> extends common.SeriesLegend<D>
 
   @override
   onLegendEntryTapUp(common.LegendEntry detail) {
+    /// Disable onLegendTap for a good life =))
     switch (legendTapHandling) {
       case common.LegendTapHandling.hide:
+        onLegendTap?.call();
         _hideSeries(detail);
         break;
 
@@ -368,12 +384,15 @@ class _FlutterSeriesLegend<D> extends common.SeriesLegend<D>
   /// hidden series will make it visible again.
   void _hideSeries(common.LegendEntry detail) {
     final seriesId = detail.series.id;
+    final withSeriesIds = detail.series.withSeriesIds;
 
     // Handle the event by toggling the hidden state of the target.
     if (isSeriesHidden(seriesId)) {
       showSeries(seriesId);
+      withSeriesIds.forEach(showSeries);
     } else {
       hideSeries(seriesId);
+      withSeriesIds.forEach(hideSeries);
     }
 
     // Redraw the chart to actually hide hidden series.

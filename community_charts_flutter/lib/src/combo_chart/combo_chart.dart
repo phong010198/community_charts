@@ -16,15 +16,17 @@
 import 'package:community_charts_common/community_charts_common.dart' as common
     show
         AxisSpec,
+        ChartController,
+        NumericAxisSpec,
         NumericCartesianChart,
         OrdinalCartesianChart,
-        NumericAxisSpec,
         RTLSpec,
         Series,
         SeriesRendererConfig;
-import '../behaviors/chart_behavior.dart' show ChartBehavior;
+
 import '../base_chart.dart' show LayoutConfig;
 import '../base_chart_state.dart' show BaseChartState;
+import '../behaviors/chart_behavior.dart' show ChartBehavior;
 import '../cartesian_chart.dart' show CartesianChart;
 import '../selection_model_config.dart' show SelectionModelConfig;
 import '../user_managed_state.dart';
@@ -43,6 +45,7 @@ class NumericComboChart extends CartesianChart<num> {
     common.AxisSpec? domainAxis,
     common.NumericAxisSpec? primaryMeasureAxis,
     common.NumericAxisSpec? secondaryMeasureAxis,
+    required common.ChartController chartController,
     common.SeriesRendererConfig<num>? defaultRenderer,
     List<common.SeriesRendererConfig<num>>? customSeriesRenderers,
     List<ChartBehavior<num>>? behaviors,
@@ -58,6 +61,7 @@ class NumericComboChart extends CartesianChart<num> {
           domainAxis: domainAxis,
           primaryMeasureAxis: primaryMeasureAxis,
           secondaryMeasureAxis: secondaryMeasureAxis,
+          chartController: chartController,
           defaultRenderer: defaultRenderer,
           customSeriesRenderers: customSeriesRenderers,
           behaviors: behaviors,
@@ -90,6 +94,7 @@ class OrdinalComboChart extends CartesianChart<String> {
     common.AxisSpec? domainAxis,
     common.NumericAxisSpec? primaryMeasureAxis,
     common.NumericAxisSpec? secondaryMeasureAxis,
+    required common.ChartController chartController,
     common.SeriesRendererConfig<String>? defaultRenderer,
     List<common.SeriesRendererConfig<String>>? customSeriesRenderers,
     List<ChartBehavior<String>>? behaviors,
@@ -105,6 +110,7 @@ class OrdinalComboChart extends CartesianChart<String> {
           domainAxis: domainAxis,
           primaryMeasureAxis: primaryMeasureAxis,
           secondaryMeasureAxis: secondaryMeasureAxis,
+          chartController: chartController,
           defaultRenderer: defaultRenderer,
           customSeriesRenderers: customSeriesRenderers,
           behaviors: behaviors,

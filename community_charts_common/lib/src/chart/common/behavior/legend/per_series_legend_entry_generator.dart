@@ -50,6 +50,7 @@ class PerSeriesLegendEntryGenerator<D> implements LegendEntryGenerator<D> {
         .map((series) => LegendEntry<D>(
               series,
               series.displayName!,
+              withSeriesIds: series.withSeriesIds,
               // TODO: Should this use series.colorFn if seriesColor is null?
               color: series.seriesColor!,
               textStyle: entryTextStyle,

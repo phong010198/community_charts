@@ -15,6 +15,7 @@
 
 import 'dart:collection' show LinkedHashMap;
 
+import 'package:community_charts_common/src/chart/common/chart_controller.dart';
 import 'package:meta/meta.dart' show protected;
 
 import '../../common/graphics_factory.dart' show GraphicsFactory;
@@ -63,7 +64,7 @@ class NumericCartesianChart extends CartesianChart<num> {
   @protected
   @override
   void initDomainAxis() {
-    _domainAxis!.tickDrawStrategy = SmallTickRendererSpec<num>()
+    _domainAxis!.tickDrawStrategy = const SmallTickRendererSpec<num>()
         .createDrawStrategy(context, graphicsFactory!);
   }
 }
@@ -86,7 +87,7 @@ class OrdinalCartesianChart extends CartesianChart<String> {
   @protected
   @override
   void initDomainAxis() {
-    _domainAxis!.tickDrawStrategy = SmallTickRendererSpec<String>()
+    _domainAxis!.tickDrawStrategy = const SmallTickRendererSpec<String>()
         .createDrawStrategy(context, graphicsFactory!);
   }
 }
@@ -169,15 +170,19 @@ abstract class CartesianChart<D> extends BaseChart<D> {
         super(layoutConfig: layoutConfig ?? _defaultLayoutConfig);
 
   @override
-  void init(ChartContext context, GraphicsFactory graphicsFactory) {
-    super.init(context, graphicsFactory);
+  void init(
+    ChartContext context,
+    GraphicsFactory graphicsFactory,
+    ChartController chartController,
+  ) {
+    super.init(context, graphicsFactory, chartController);
 
     _primaryMeasureAxis.context = context;
-    _primaryMeasureAxis.tickDrawStrategy = GridlineRendererSpec<num>()
+    _primaryMeasureAxis.tickDrawStrategy = const GridlineRendererSpec<num>()
         .createDrawStrategy(context, graphicsFactory);
 
     _secondaryMeasureAxis.context = context;
-    _secondaryMeasureAxis.tickDrawStrategy = GridlineRendererSpec<num>()
+    _secondaryMeasureAxis.tickDrawStrategy = const GridlineRendererSpec<num>()
         .createDrawStrategy(context, graphicsFactory);
 
     _disjointMeasureAxes.forEach((String axisId, NumericAxis axis) {
@@ -247,7 +252,7 @@ abstract class CartesianChart<D> extends BaseChart<D> {
       _primaryMeasureAxis =
           _primaryMeasureAxisSpec?.createAxis() ?? NumericAxis();
 
-      _primaryMeasureAxis.tickDrawStrategy = GridlineRendererSpec<num>()
+      _primaryMeasureAxis.tickDrawStrategy = const GridlineRendererSpec<num>()
           .createDrawStrategy(context, graphicsFactory!);
 
       _primaryMeasureAxisSpec?.configure(
@@ -263,7 +268,7 @@ abstract class CartesianChart<D> extends BaseChart<D> {
       _secondaryMeasureAxis =
           _secondaryMeasureAxisSpec?.createAxis() ?? NumericAxis();
 
-      _secondaryMeasureAxis.tickDrawStrategy = GridlineRendererSpec<num>()
+      _secondaryMeasureAxis.tickDrawStrategy = const GridlineRendererSpec<num>()
           .createDrawStrategy(context, graphicsFactory!);
 
       _secondaryMeasureAxisSpec?.configure(

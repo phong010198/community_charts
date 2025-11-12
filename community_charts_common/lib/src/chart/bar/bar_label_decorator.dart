@@ -33,12 +33,12 @@ class BarLabelDecorator<D> extends BarRendererDecorator<D> {
   static const _defaultHorizontalLabelAnchor = BarLabelAnchor.start;
   static const _defaultVerticalLabelAnchor = BarLabelAnchor.end;
   static const _defaultlabelVerticalPosition = BarLabelVerticalPosition.middle;
-  static final _defaultInsideLabelStyle =
+  static const _defaultInsideLabelStyle =
       TextStyleSpec(fontSize: 12, color: Color.white);
-  static final _defaultOutsideLabelStyle =
+  static const _defaultOutsideLabelStyle =
       TextStyleSpec(fontSize: 12, color: Color.black);
-  static final _labelSplitPattern = '\n';
-  static final _defaultMultiLineLabelPadding = 2;
+  static const _labelSplitPattern = '\n';
+  static const _defaultMultiLineLabelPadding = 2;
 
   /// Configures [TextStyleSpec] for labels placed inside the bars.
   final TextStyleSpec insideLabelStyleSpec;
@@ -219,8 +219,9 @@ class BarLabelDecorator<D> extends BarRendererDecorator<D> {
                 bounds.width / 2 -
                 labelElement.measurement.horizontalSliceWidth / 2)
             .round();
-
-        canvas.drawText(labelElement, labelX, labelY);
+        if (labelX > 30) {
+          canvas.drawText(labelElement, labelX, labelY);
+        }
         labelsDrawn += 1;
       }
     }

@@ -96,6 +96,7 @@ class BaseChartState<D> extends State<BaseChart<D>>
     final chartContainer = new ChartContainer<D>(
       oldChartWidget: _oldWidget,
       chartWidget: widget,
+      chartController: widget.chartController,
       chartState: this,
       animationValue: _animationValue,
       rtl: Directionality.of(context) == TextDirection.rtl,

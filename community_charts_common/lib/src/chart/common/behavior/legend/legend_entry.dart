@@ -96,6 +96,7 @@ class LegendCategory<D> extends LegendEntryBase {
 /// [D] the domain class type for the datum.
 class LegendEntry<D> extends LegendEntryBase {
   final ImmutableSeries<D> series;
+  final List<String> withSeriesIds;
   final dynamic datum;
   final int? datumIndex;
   final D? domain;
@@ -111,6 +112,7 @@ class LegendEntry<D> extends LegendEntryBase {
   LegendEntry(
     this.series,
     String label, {
+    required this.withSeriesIds,
     this.datum,
     this.datumIndex,
     this.domain,

@@ -14,10 +14,11 @@
 // limitations under the License.
 
 import 'package:community_charts_common/community_charts_common.dart' as common
-    show ArcRendererConfig, PieChart, RTLSpec, Series;
-import 'behaviors/chart_behavior.dart' show ChartBehavior;
+    show ArcRendererConfig, PieChart, RTLSpec, Series, ChartController;
+
 import 'base_chart.dart' show BaseChart, LayoutConfig;
 import 'base_chart_state.dart' show BaseChartState;
+import 'behaviors/chart_behavior.dart' show ChartBehavior;
 import 'selection_model_config.dart' show SelectionModelConfig;
 
 class PieChart<D> extends BaseChart<D> {
@@ -25,6 +26,7 @@ class PieChart<D> extends BaseChart<D> {
     List<common.Series<dynamic, D>> seriesList, {
     bool? animate,
     Duration? animationDuration,
+    required common.ChartController chartController,
     common.ArcRendererConfig<D>? defaultRenderer,
     List<ChartBehavior<D>>? behaviors,
     List<SelectionModelConfig<D>>? selectionModels,
@@ -35,6 +37,7 @@ class PieChart<D> extends BaseChart<D> {
           seriesList,
           animate: animate,
           animationDuration: animationDuration,
+          chartController: chartController,
           defaultRenderer: defaultRenderer,
           behaviors: behaviors,
           selectionModels: selectionModels,

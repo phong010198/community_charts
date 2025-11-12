@@ -42,6 +42,9 @@ class SeriesLegend<D> extends Legend<D> {
   /// Whether or not the series legend should show measures on datum selection.
   late bool _showMeasures;
 
+  /// onLegendTap.
+  late Function()? onLegendTap;
+
   SeriesLegend({
     SelectionModelType? selectionModelType,
     LegendEntryGenerator<D>? legendEntryGenerator,
@@ -49,6 +52,7 @@ class SeriesLegend<D> extends Legend<D> {
     MeasureFormatter? secondaryMeasureFormatter,
     bool? showMeasures,
     LegendDefaultMeasure? legendDefaultMeasure,
+    this.onLegendTap,
     TextStyleSpec? entryTextStyle,
   }) : super(
             selectionModelType: selectionModelType ?? SelectionModelType.info,
